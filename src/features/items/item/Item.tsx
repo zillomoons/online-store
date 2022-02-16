@@ -4,6 +4,7 @@ import {addItemToCart} from "../../cart/cartSlice";
 
 export const Item = (props: PropsType) => {
     const {
+        id,
         imgUrl,
         altName,
         title,
@@ -12,7 +13,7 @@ export const Item = (props: PropsType) => {
     } = props;
     const dispatch = useAppDispatch();
     const addToCart = () => {
-        dispatch(addItemToCart(props))
+        dispatch(addItemToCart({id, title, price}))
     }
 
     return (

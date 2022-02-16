@@ -4,7 +4,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import './App.css';
 import {Header} from "./components/header";
 import {ItemsList} from "./features/items";
-import {Cart} from "./features/cart";
+import {CartPage} from "./features/cart/CartPage";
 
 
 export const PATH = {
@@ -18,7 +18,7 @@ function App() {
             <Header/>
             <Routes>
                 <Route path={PATH.MAIN} element={<ItemsList/>}/>
-                <Route path={PATH.CART} element={<Cart/>}/>
+                <Route path={PATH.CART} element={<CartPage/>}/>
             </Routes>
         </BrowserRouter>
     );
