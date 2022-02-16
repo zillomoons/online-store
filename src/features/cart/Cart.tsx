@@ -1,5 +1,8 @@
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import {CartItemType, selectCartItems} from "./cartSlice";
 import {selectCartSum} from "./cartSlice";
+import {useEffect, useState} from "react";
+import {ItemType} from "../../App";
 
 const orderFormStyle = {
     display: 'flex',
@@ -7,13 +10,19 @@ const orderFormStyle = {
 }
 export const Cart = () => {
     const cartSum = useAppSelector(selectCartSum);
+    const items = useAppSelector(selectCartItems);
     const dispatch = useAppDispatch();
+    const [cartItems, setCartItems] = useState<CartItemType[]>(items);
+
     return (
         <div style={{textAlign: 'center'}}>
             <h2>Cart</h2>
             <div style={{display: 'flex', justifyContent: 'space-evenly', margin: '50px 0'}}>
                 <div style={{width: '400px', border: '1px solid'}}>
-                <div>Subtotal: {cartSum} rub.</div>
+                    {cartItems.map(item => <div key={item.id}>{item.title}--{item.qty}--{item.price}</div>)}
+                <div>Subtotal: {
+                    cartSum
+                } rub.</div>
                 </div>
                 <div style={{
                     display: 'flex',
@@ -30,3 +39,4 @@ export const Cart = () => {
         </div>
     )
 }
+

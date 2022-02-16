@@ -21,7 +21,9 @@ export const Header = () => {
 
     return (
         <div style={headerStyle}>
-            <div>{cartSum === 0 ? null : cartSum}</div>
+            <div>{
+                cartSum === 0 ? null : cartSum
+            }</div>
             <button onClick={onClickHandler} style={{padding: '10px 25px'}}>Cart</button>
         </div>
     )

@@ -1,4 +1,20 @@
-export const Item = ({imgUrl, altName, title, description, price}: PropsType) => {
+import {ItemType} from "../../../App";
+import {useAppDispatch} from "../../../app/hooks";
+import {addItemToCart} from "../../cart/cartSlice";
+
+export const Item = (props: PropsType) => {
+    const {
+        imgUrl,
+        altName,
+        title,
+        description,
+        price
+    } = props;
+    const dispatch = useAppDispatch();
+    const addToCart = () => {
+        dispatch(addItemToCart(props))
+    }
+
     return (
         <div>
             <div>
@@ -7,15 +23,9 @@ export const Item = ({imgUrl, altName, title, description, price}: PropsType) =>
             <div>{title}</div>
             <div>{description}</div>
             <div>{price}</div>
-            <button>add to cart</button>
+            <button onClick={addToCart}>add to cart</button>
         </div>
     )
 }
 
-type PropsType = {
-    imgUrl: string,
-    altName: string
-    title: string
-    description: string
-    price: number
-}
+type PropsType = ItemType

@@ -1,5 +1,5 @@
-import {itemsData} from "../../App";
 import {Item} from "./item/Item";
+import {itemsData} from "./ItemsData";
 
 const itemsListStyle = {
     display: 'flex',
@@ -9,6 +9,7 @@ const itemsListStyle = {
 
 export const ItemsList = () => {
     const mappedItems = itemsData.map(item => <Item key={item.id}
+                                                    id={item.id}
                                                     imgUrl={item.imgUrl}
                                                     altName={item.altName}
                                                     title={item.title}

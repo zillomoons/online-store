@@ -6,25 +6,7 @@ import {Header} from "./components/header";
 import {ItemsList} from "./features/items";
 import {Cart} from "./features/cart";
 
-export const itemsData = [
-    {
-        id: 545484,
-        imgUrl: '',
-        altName: 'some product',
-        title: 'Samsung S21',
-        description: 'some description',
-        price: 25000
-    },
-    {id: 545589, imgUrl: '', altName: 'some product', title: 'Apple X', description: 'some description', price: 45000},
-    {
-        id: 5457874,
-        imgUrl: '',
-        altName: 'some product',
-        title: 'Honor M21',
-        description: 'some description',
-        price: 15000
-    },
-]
+
 export const PATH = {
     MAIN: '/',
     CART: '/cart'
@@ -43,6 +25,15 @@ function App() {
 }
 
 export default App;
+
+export type ItemType = {
+    id: number
+    imgUrl: string
+    altName: string
+    title: string
+    description: string
+    price: number
+}
 
 // <header className="App-header">
 //   <img src={logo} className="App-logo" alt="logo" />
