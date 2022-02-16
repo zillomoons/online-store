@@ -1,42 +1,76 @@
-import {useState} from "react";
 import {useAppSelector} from "../../app/hooks";
+import {SubmitHandler, useForm} from "react-hook-form";
 import {selectCartItems} from "../../features/cart/cartSlice";
+import s from './OrderForm.module.css'
 
 export const OrderForm = () => {
     const items = useAppSelector(selectCartItems);
-    const [name, setName] = useState('');
-    const [surname, setSurname] = useState('');
-    const [address, setAddress] = useState('');
-    const [phone, setPhone] = useState('');
-    const onSubmit = () => {
-        const customer = {
-            name,
-            surname,
-            address,
-            phone
-        }
-      const order = JSON.stringify({
-          customer: customer,
-          cart: items
-      })
-        console.log(order);
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: {errors}
+    } = useForm<IFormInput>();
+    const onSubmit: SubmitHandler<IFormInput> = data => {
+        const orderData = JSON.stringify({
+            customerData: data,
+            cart: items
+        })
+        console.log(orderData);
     }
-    return (
-        <div>
-            <div style={{display: 'flex', flexDirection: 'column'}}>
-                <label htmlFor="">Name</label>
-                <input type="text" placeholder='Name' value={name} onChange={e=> setName(e.currentTarget.value)}/>
-                <label htmlFor="">Surname</label>
-                <input type="text" placeholder='Surname' value={surname} onChange={e=> setSurname(e.currentTarget.value)}/>
-                <label htmlFor="">Address</label>
-                <input type="text" placeholder='Address' value={address} onChange={e=> setAddress(e.currentTarget.value)}/>
-                <label htmlFor="">Phone</label>
-                <input type="text" placeholder='Phone' value={phone} onChange={e=> setPhone(e.currentTarget.value)}/>
-            </div>
-            <div>
-                <button onClick={onSubmit}>ORDER</button>
-            </div>
-        </div>
 
+    return (
+        <form onSubmit={handleSubmit(onSubmit)} className={s.orderForm}>
+            <label>First Name</label>
+            <input {...register('firstName', {
+                required: true,
+                maxLength: 20,
+                pattern: /^[A-Za-z]+$/i
+            })} />
+            {errors?.firstName?.type === "required" && <p>This field is required</p>}
+            {errors?.firstName?.type === "maxLength" && (
+                <p>First name cannot exceed 20 characters</p>
+            )}
+            {errors?.firstName?.type === "pattern" && (
+                <p>Alphabetical characters only</p>
+            )}
+            <label>Last Name</label>
+            <input {...register('lastName', {
+                required: true,
+                maxLength: 70,
+                pattern: /^[A-Za-z]+$/i
+            })} />
+            {errors?.lastName?.type === "required" && <p>This field is required</p>}
+            {errors?.lastName?.type === "maxLength" && (
+                <p>Last name cannot exceed 70 characters</p>
+            )}
+            {errors?.lastName?.type === "pattern" && (
+                <p>Alphabetical characters only</p>
+            )}
+            <label>Address</label>
+            <input {...register('address', {required: true, maxLength: 200})} />
+            {errors?.address?.type === "required" && <p>This field is required</p>}
+            {errors?.address?.type === "maxLength" && (
+                <p>Address cannot exceed 200 characters</p>
+            )}
+            <label>Phone</label>
+            <input {...register('phone', {
+                required: true,
+                maxLength: 13,
+                pattern: /^\d+$/
+            })} />
+            {errors?.phone?.type === "required" && <p>This field is required</p>}
+            {errors?.phone?.type === "pattern" && (
+                <p>Digits only</p>
+            )}
+            <input type='submit'/>
+        </form>
     )
+}
+
+interface IFormInput {
+    firstName: string
+    lastName: string
+    address: string
+    phone: number
 }
