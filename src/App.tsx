@@ -1,7 +1,10 @@
 import React from 'react';
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+
 import './App.css';
-import {Header} from "./components/header/Header";
-import {ItemsList} from "./features/items/ItemsList";
+import {Header} from "./components/header";
+import {ItemsList} from "./features/items";
+import {Cart} from "./features/cart";
 
 export const itemsData = [
     {
@@ -22,14 +25,20 @@ export const itemsData = [
         price: 15000
     },
 ]
+export const PATH = {
+    MAIN: '/',
+    CART: '/cart'
+}
 
 function App() {
     return (
-        <div className="App">
+        <BrowserRouter>
             <Header/>
-            <ItemsList/>
-
-        </div>
+            <Routes>
+                <Route path={PATH.MAIN} element={<ItemsList/>}/>
+                <Route path={PATH.CART} element={<Cart/>}/>
+            </Routes>
+        </BrowserRouter>
     );
 }
 
